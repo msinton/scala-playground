@@ -3,8 +3,8 @@ package play.hex
 // TODO remove boardData ...
 final case class Hex protected(id: Int, hexType: HexType, hasVolcano: Boolean = false, private val boardData: BoardData) {
 
-  def flood(): Hex = this.copy(hexType = hexType.flood)
-  def lavaFlow(): Hex = this.copy(hexType = hexType.lavaFlow)
+  def flood: Hex = this.copy(hexType = hexType.flood)
+  def lavaFlow: Hex = this.copy(hexType = hexType.lavaFlow)
 
   def neighbours: Map[Side, Hex] = boardData.hexPosition(this)
     .map(hexPos => (for {
@@ -21,15 +21,16 @@ class BoardData {
 
   private var hexesByPosition = Map.empty[HexPosition, Hex]
   private var hexesToPosition = Map.empty[Hex, HexPosition]
-  private var hexesByType = Map.empty[HexType, Iterable[(HexPosition, Hex)]]
+  private var _hexesByType = Map.empty[HexType, Map[HexPosition, Hex]]
 
   private def setupHexes(): Iterable[(HexPosition, Hex)] = ???
 
   private val hexes = setupHexes()
   hexesByPosition = hexes.toMap
   hexesToPosition = hexes.map(_.swap).toMap
+  _hexesByType = hexes.groupBy(_._2.hexType).mapValues(_.toMap).withDefaultValue(Map.empty)
 
-
+  def hexesByType: Map[HexType, Map[HexPosition, Hex]] = _hexesByType
 
   def hexPosition(hex: Hex): Option[HexPosition] = hexesToPosition.get(hex)
   // rivers
@@ -65,17 +66,26 @@ class BoardData {
     )
   }
 
-  def floodHex(hex: Hex): Unit = {
-    hexesToPosition.get(hex).foreach(p => swapHexAt(p, hex, hex.flood()))
+  def floodHex(hexPos: HexPosition): Unit = {
+    hexesByPosition.get(hexPos).foreach(hex => updateHexAt(hexPos, hex.flood))
   }
 
-  def lavaFieldOnHex(hex: Hex): Unit = {
-    hexesToPosition.get(hex).foreach(p => swapHexAt(p, hex, hex.flood()))
+  def lavaFieldOnHex(hexPos: HexPosition): Unit = {
+    hexesByPosition.get(hexPos).foreach(hex => updateHexAt(hexPos, hex.lavaFlow))
   }
 
-  def swapHexAt(p: HexPosition, oldHex: Hex, newHex: Hex): Unit = {
-    hexesToPosition -= oldHex
+  def updateHexAt(p: HexPosition, newHex: Hex): Unit = {
+    hexesByPosition.get(p).foreach(hex => {
+      hexesToPosition -= hex
+
+      if (newHex.hexType != hex.hexType) {
+        _hexesByType.updated(hex.hexType, _hexesByType(hex.hexType) - p)
+        _hexesByType.updated(newHex.hexType, _hexesByType(newHex.hexType).updated(p, newHex))
+      }
+    })
+
     hexesToPosition = hexesToPosition.updated(newHex, p)
     hexesByPosition = hexesByPosition.updated(p, newHex)
   }
+
 }
