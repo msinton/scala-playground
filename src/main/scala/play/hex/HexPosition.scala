@@ -26,6 +26,7 @@ final case class HexPosition(x: Int, y: Int) extends Ordered[HexPosition] {
     case S => this.copy(x = x + 1)
   }
 
+  // TODO consider Flyweight to prevent GC
   val next: Side => HexPosition = if (isEvenCol) nextWhenEvenCol else nextWhenOddCol
 
   def neighbours: Iterable[HexPosition] = Sides.seq.map(next)
