@@ -48,6 +48,11 @@ class HexStore(
       hex <- at(pos)
     } yield (side, hex)
 
+  private def findNeighbourPosition(p: HexPosition, neighbourHex: Hex): Option[(Side, HexPosition)] =
+    p.neighboursWithSides.find({
+      case (_, neighbourP) => at(neighbourP).contains(neighbourHex)
+    })
+
   def neighbours(hex: Hex): Iterable[Hex] =
     toPos(hex)
       .map(hexPosToNeighbours)
@@ -57,5 +62,13 @@ class HexStore(
     toPos(hex)
       .map(hexPosToNeighboursWithSide(_).toMap)
       .getOrElse(Map.empty)
+
+  // TODO consider generalised
+  def getSide(hex: Hex, neighbourHex: Hex): Option[Side] =
+    for {
+      p <- toPos(hex)
+      (side, _) <- findNeighbourPosition(p, neighbourHex)
+    } yield side
+
 
 }

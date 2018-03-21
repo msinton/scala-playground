@@ -28,7 +28,7 @@ class RiverNetwork(random: Random, hexes: HexStore) extends LazyLogging {
       group <- hexGroups.tail
       hex <- group
       boundaryHex <- neighboursNotInGroup(hex, group)
-      side <- hex.getSide(boundaryHex)
+      side <- hexes.getSide(hex, boundaryHex)
     } yield (hex, side)
 
     hexBoundaries.map {
