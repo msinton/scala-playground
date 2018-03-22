@@ -35,16 +35,16 @@ class RiverNetwork(random: Random, hexes: HexStore) extends LazyLogging {
       side <- hexes.getSide(hex, boundaryHex)
     } yield (hex, side)
 
-    hexBoundaries.map {
+    hexBoundaries.map({
       case (hex, side) => BordersHex(hexes.toPos(hex).get, side)
-    }.toMap
+    })
   }
 
   def generate(numPlayers: Int): (Map[BordersHex, RiverSegment], Seq[HexGroup]) = {
     val numGroups = if (numPlayers == 1) 2 else numPlayers
     _groups = new HexGridDivider(random).divideIntoRoughlyEqualRandomlyShaped(hexes, numGroups)
     val edges = applyRiversToBorders(_groups)
-    val rivers = setupFlow(edges.values.toBuffer)
+    val rivers = setupFlow(edges.toBuffer)
     (rivers, _groups)
   }
 

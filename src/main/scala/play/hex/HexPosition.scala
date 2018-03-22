@@ -17,14 +17,16 @@ final case class HexPosition(x: Int, y: Int) extends Ordered[HexPosition] {
       NE -> HexPosition(x, y + 1),
       S -> HexPosition(x + 1, y),
       SW -> HexPosition(x + 1, y - 1),
-      SE -> HexPosition(x + 1, y + 1))
+      SE -> HexPosition(x + 1, y + 1)
+    )
     else Map(
       N -> HexPosition(x - 1, y),
       NE -> HexPosition(x - 1, y + 1),
       NW -> HexPosition(x - 1, y - 1),
       SW -> HexPosition(x, y - 1),
       SE -> HexPosition(x, y + 1),
-      S -> HexPosition(x + 1, y))
+      S -> HexPosition(x + 1, y)
+    )
   }
 
   def neighbourAt(side: Side): HexPosition = neighbourMap(side)

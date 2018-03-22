@@ -5,32 +5,32 @@ import play.hex.vertices.Point
 import play.river.RiverSegment
 
 class RiverStore(private[hex] var byPosition: Map[BordersHex, RiverSegment]) extends StoreableByEdge[RiverSegment] {
-
-  def neighbours(inflowDirection: Boolean, river: RiverSegment): Iterable[(RiverSegment, Point)] = {
-    toPos(river).map(edge => {
-      val sourceOfNeighbours = if (inflowDirection) river.flow.to else river.flow.from
-      val nextSideOnThis = if (inflowDirection && river.flow.to.) edge.side.antiClockwise
-      at(BordersHex(edge.hexPosition, sideOfThisHexPositionToLookAt))
-
-      edge.hexPosition.
-      sourceOfNeighbours.
-    }).getOrElse(Iterable.empty)
-  }
-
-
-  /**
-    * @return True if river flows towards the hex i.e. the "to" point lies on the hex.
-    */
-  def flowsTowards(river: RiverSegment, hex: Hex): Boolean = {
-    hex.getVertex(river.flow.to).isDefined
-  }
-
-  /**
-    * @return True if this flows towards the otherRiver
-    */
-  def flowsTowards(river: RiverSegment, otherRiver: RiverSegment): Boolean = {
-    otherRiver.otherPoint(river.flow.to).isDefined
-  }
+//
+//  def neighbours(inflowDirection: Boolean, river: RiverSegment): Iterable[(RiverSegment, Point)] = {
+//    toPos(river).map(edge => {
+//      val sourceOfNeighbours = if (inflowDirection) river.flow.to else river.flow.from
+//      val nextSideOnThis = if (inflowDirection && river.flow.to.) edge.side.antiClockwise
+//      at(BordersHex(edge.hexPosition, sideOfThisHexPositionToLookAt))
+//
+//      edge.hexPosition.
+//      sourceOfNeighbours.
+//    }).getOrElse(Iterable.empty)
+//  }
+//
+//
+//  /**
+//    * @return True if river flows towards the hex i.e. the "to" point lies on the hex.
+//    */
+//  def flowsTowards(river: RiverSegment, hex: Hex): Boolean = {
+//    hex.getVertex(river.flow.to).isDefined
+//  }
+//
+//  /**
+//    * @return True if this flows towards the otherRiver
+//    */
+//  def flowsTowards(river: RiverSegment, otherRiver: RiverSegment): Boolean = {
+//    otherRiver.otherPoint(river.flow.to).isDefined
+//  }
 }
 
 

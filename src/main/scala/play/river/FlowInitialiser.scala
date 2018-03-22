@@ -1,8 +1,7 @@
-package play
+package play.river
 
 import com.typesafe.scalalogging.LazyLogging
 import play.hex.BordersHex
-import play.river.RiverSegment
 
 import scala.util.Random
 

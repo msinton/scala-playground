@@ -2,14 +2,6 @@ package play.hex.vertices
 
 import play.hex.{HexPosition, side}
 
-trait Vertex
-case object NW extends Vertex
-case object NE extends Vertex
-case object E extends Vertex
-case object SE extends Vertex
-case object SW extends Vertex
-case object W extends Vertex
-
 //TODO get rid of id?
 case class Point(hexPosition: HexPosition, vertex: Vertex)
 
@@ -25,7 +17,7 @@ object Point {
     * (1) the hexPosition is chosen with vertex E
     * (2) the hexPosition is chosen with vertex SE
     */
-  def apply(id: Int, hexPosition: HexPosition, vertex: Vertex): Point = {
+  def apply(hexPosition: HexPosition, vertex: Vertex): Point = {
 
     vertex match {
       case SW => new Point(hexPosition.neighbourAt(side.SW), E)

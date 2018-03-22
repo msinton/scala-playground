@@ -3,7 +3,7 @@ package play.hex
 import org.scalatest.{SequentialNestedSuiteExecution, WordSpec}
 import play.hex.side.NE
 
-class HexPositionSerialTest extends WordSpec with SequentialNestedSuiteExecution {
+class HexPositionSerialTest extends WordSpec {
 
   "Hex Position" when {
     "creating" should {
@@ -12,15 +12,25 @@ class HexPositionSerialTest extends WordSpec with SequentialNestedSuiteExecution
         HexPosition.cache = Map.empty
 
         var set = Set.empty[HexPosition]
-        val p1 = HexPosition(1, 1)
-        set += p1
+        val p = HexPosition(1, 1)
+        set += p
         assert(HexPosition.cache.size === set.size)
 
-        set = set ++ p1.neighbours
+        set = set ++ p.neighbours
         assert(HexPosition.cache.size === set.size)
 
-        set = set ++ p1.neighbourMap.find(_._1 == NE).get._2.neighbours // 2 of the neighbours already created
+        set = set ++ p.neighbourMap.find(_._1 == NE).get._2.neighbours // 2 of the neighbours already created
         assert(HexPosition.cache.size === set.size)
+      }
+    }
+    "neighbourAt side" should {
+      "get the correct neighbour" in {
+
+        val p = HexPosition(0, 0)
+        val neighbour = p.neighbourAt(side.N)
+
+        assert(neighbour.x == -1)
+        assert(neighbour.y == 0)
       }
     }
   }
