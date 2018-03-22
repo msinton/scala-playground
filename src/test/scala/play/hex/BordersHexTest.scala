@@ -1,7 +1,6 @@
-package play
+package play.hex
 
 import org.scalatest.{GivenWhenThen, WordSpec}
-import play.hex._
 
 class BordersHexTest extends WordSpec with GivenWhenThen {
 
