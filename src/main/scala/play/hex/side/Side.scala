@@ -1,4 +1,4 @@
-package play.hex
+package play.hex.side
 
 sealed trait Side {
   def clockwise: Side

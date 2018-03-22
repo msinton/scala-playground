@@ -36,15 +36,15 @@ class RiverNetwork(random: Random, hexes: HexStore) extends LazyLogging {
     } yield (hex, side)
 
     hexBoundaries.map {
-      case (hex, side) => (BordersHex(hexes.toPos(hex).get, side), RiverSegment())
+      case (hex, side) => BordersHex(hexes.toPos(hex).get, side)
     }.toMap
   }
 
   def generate(numPlayers: Int): (Map[BordersHex, RiverSegment], Seq[HexGroup]) = {
     val numGroups = if (numPlayers == 1) 2 else numPlayers
     _groups = new HexGridDivider(random).divideIntoRoughlyEqualRandomlyShaped(hexes, numGroups)
-    val rivers = applyRiversToBorders(_groups)
-    setupFlow(rivers.values.toBuffer)
+    val edges = applyRiversToBorders(_groups)
+    val rivers = setupFlow(edges.values.toBuffer)
     (rivers, _groups)
   }
 
@@ -53,23 +53,8 @@ class RiverNetwork(random: Random, hexes: HexStore) extends LazyLogging {
   /**
     * Enables the flow to be setup, does nothing if already setup.
     */
-  final def setupFlow(rivers: Seq[RiverSegment]): Unit = {
-    new FlowInitialiser(random).setup(rivers)
+  final def setupFlow(edges: Seq[BordersHex]): Map[BordersHex, RiverSegment] = {
+    new FlowInitialiser(random).setup(edges)
   }
-
-//
-//  // TODO refactor - only remove by position else use map from river to position
-//  final def removeRiver(river: RiverSegment) = {
-//    _riverMap.find(_._2 == river).foreach(x => _riverMap = _riverMap - x._1)
-//  }
-//
-//  final def addRiver(hexA: Hex, sideA: Side): Option[RiverSegment] = {
-//    hexes.toPos(hexA).map(p => {
-//      val edge = BordersHex(p, sideA)
-//      val river = RiverSegment()
-//      _riverMap = _riverMap.updated(edge, river)
-//      river
-//    })
-//  }
 
 }

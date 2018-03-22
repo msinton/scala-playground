@@ -1,6 +1,7 @@
 package play.hex
 
 import org.scalatest.{SequentialNestedSuiteExecution, WordSpec}
+import play.hex.side.NE
 
 class HexPositionSerialTest extends WordSpec with SequentialNestedSuiteExecution {
 

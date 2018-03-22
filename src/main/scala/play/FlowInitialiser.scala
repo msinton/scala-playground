@@ -1,6 +1,7 @@
 package play
 
 import com.typesafe.scalalogging.LazyLogging
+import play.hex.BordersHex
 import play.river.RiverSegment
 
 import scala.util.Random
@@ -10,17 +11,17 @@ class FlowInitialiser(random: Random) extends LazyLogging {
 
   type Point = Int
 
-  def setup(rivers: Iterable[RiverSegment]): Unit = {
-    setupFlowsFromSources(rivers)
-    setupFlowsFromRandom(rivers)
+  def setup(edges: Iterable[BordersHex]): Map[BordersHex, RiverSegment] = {
+    setupFlowsFromSources(edges)
+    setupFlowsFromRandom(edges)
   }
 
   // A source is a point where there are 3 rivers connected
-  def setupFlowsFromSources(rivers: Iterable[RiverSegment]): Unit = ???
+  def setupFlowsFromSources(edges: Iterable[BordersHex]): Unit = ???
 
-  private final def setupFlowsFromRandom(rivers: Iterable[RiverSegment]): Unit = ???
+  private final def setupFlowsFromRandom(edges: Iterable[BordersHex]): Map[BordersHex, RiverSegment] = ???
 
-  private def setRandomFlow(river: RiverSegment): RiverSegment = ???
+  private def setRandomFlow(edge: BordersHex): RiverSegment = ???
 
   private def setFlowFrom(riverSegment: RiverSegment, fromPoint: Point): RiverSegment = ???
 

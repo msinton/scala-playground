@@ -15,15 +15,14 @@ class HexStore(private[hex] var byPosition: Map[HexPosition, Hex]) extends Store
     _byType = _byType.updated(hex.hexType, _byType(hex.hexType) - p)
   }
 
-  protected def insertCustom(p: HexPosition, hex: Hex): Unit = {
-    _byType = _byType.updated(hex.hexType, _byType(hex.hexType).updated(p, hex))
-  }
-
   override def updateCustom(p: HexPosition, newHex: Hex, oldHex: Hex): Unit = {
     if (newHex.hexType != oldHex.hexType) {
       removeCustom(p, oldHex)
     }
-    insertCustom(p, newHex)
+  }
+
+  override def updateCustom(p: HexPosition, hex: Hex): Unit = {
+    _byType = _byType.updated(hex.hexType, _byType(hex.hexType).updated(p, hex))
   }
 
   def byType: Map[HexType, Map[HexPosition, Hex]] = _byType

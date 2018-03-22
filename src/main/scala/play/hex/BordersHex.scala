@@ -1,5 +1,7 @@
 package play.hex
 
+import play.hex.side._
+
 // TODO rename as Edge
 case class BordersHex(hexPosition: HexPosition, side: Side)
 
@@ -26,6 +28,5 @@ object BordersHex {
         cache = cache.updated(key, edge)
         edge
     }
-
   }
 }

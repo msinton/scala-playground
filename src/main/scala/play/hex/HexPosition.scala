@@ -1,5 +1,7 @@
 package play.hex
 
+import play.hex.side._
+
 final case class HexPosition(x: Int, y: Int) extends Ordered[HexPosition] {
 
   import scala.math.Ordered.orderingToOrdered

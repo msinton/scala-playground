@@ -1,6 +1,7 @@
 package play.hex.stores
 
 import play.hex._
+import play.hex.side.Side
 import play.hex.syntax.{HasNeighbourMap, HasNeighbours}
 
 trait StoreableByHexPosition[T] extends StoreableByPosition[HexPosition, T] {

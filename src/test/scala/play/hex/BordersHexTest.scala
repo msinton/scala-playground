@@ -1,6 +1,7 @@
 package play.hex
 
 import org.scalatest.{GivenWhenThen, WordSpec}
+import play.hex.side.{N, S, Side}
 
 class BordersHexTest extends WordSpec with GivenWhenThen {
 
@@ -25,13 +26,13 @@ class BordersHexTest extends WordSpec with GivenWhenThen {
       }
 
       "side is NE" should {
-        val side = NE
+        val side = vertices.NE
         "translate hex position and side" in {
 
           val bordersHex = create(0, y, side)
 
           Then("side is translated")
-          assert(bordersHex.side === SW)
+          assert(bordersHex.side === vertices.SW)
 
           And("position is translated")
           assert(bordersHex.hexPosition.y === y + 1)
@@ -40,13 +41,13 @@ class BordersHexTest extends WordSpec with GivenWhenThen {
       }
 
       "side is NW" should {
-        val side = NW
+        val side = vertices.NW
         "translate hex position and side" in {
 
           val bordersHex = create(0, y, side)
 
           Then("side is translated")
-          assert(bordersHex.side === SE)
+          assert(bordersHex.side === vertices.SE)
 
           And("position is translated")
           assert(bordersHex.hexPosition.y === y - 1)
@@ -70,7 +71,7 @@ class BordersHexTest extends WordSpec with GivenWhenThen {
       }
 
       "side is SW" should {
-        val side = SW
+        val side = vertices.SW
         "NOT translate hex position nor side" in {
 
           val bordersHex = create(0, y, side)
@@ -85,7 +86,7 @@ class BordersHexTest extends WordSpec with GivenWhenThen {
       }
 
       "side is SE" should {
-        val side = SE
+        val side = vertices.SE
         "NOT translate hex position nor side" in {
 
           val bordersHex = create(0, y, side)
@@ -118,13 +119,13 @@ class BordersHexTest extends WordSpec with GivenWhenThen {
       }
 
       "side is NE" should {
-        val side = NE
+        val side = vertices.NE
         "translate hex position and side" in {
 
           val bordersHex = create(0, y, side)
 
           Then("side is translated")
-          assert(bordersHex.side === SW)
+          assert(bordersHex.side === vertices.SW)
 
           And("position is translated")
           assert(bordersHex.hexPosition.y === y + 1)
@@ -133,13 +134,13 @@ class BordersHexTest extends WordSpec with GivenWhenThen {
       }
 
       "side is NW" should {
-        val side = NW
+        val side = vertices.NW
         "translate hex position and side" in {
 
           val bordersHex = create(0, y, side)
 
           Then("side is translated")
-          assert(bordersHex.side === SE)
+          assert(bordersHex.side === vertices.SE)
 
           And("position is translated")
           assert(bordersHex.hexPosition.y === y - 1)
@@ -163,7 +164,7 @@ class BordersHexTest extends WordSpec with GivenWhenThen {
       }
 
       "side is SW" should {
-        val side = SW
+        val side = vertices.SW
         "NOT translate hex position nor side" in {
 
           val bordersHex = create(0, y, side)
@@ -178,7 +179,7 @@ class BordersHexTest extends WordSpec with GivenWhenThen {
       }
 
       "side is SE" should {
-        val side = SE
+        val side = vertices.SE
         "NOT translate hex position nor side" in {
 
           val bordersHex = create(0, y, side)

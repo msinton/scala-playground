@@ -15,6 +15,7 @@ trait StoreableByPosition[P, T] {
 
   // override to for custom logic in update
   protected def updateCustom(p: P, newT: T, oldT: T): Unit = {}
+  protected def updateCustom(p: P, newT: T): Unit = {}
   protected def removeCustom(p: P, t: T): Unit = {}
 
   def update(p: P, newT: T): Unit = {
@@ -22,6 +23,7 @@ trait StoreableByPosition[P, T] {
       toPosition -= oldT
       updateCustom(p, newT, oldT)
     })
+    updateCustom(p, newT)
     toPosition = toPosition.updated(newT, p)
     byPosition = byPosition.updated(p, newT)
   }

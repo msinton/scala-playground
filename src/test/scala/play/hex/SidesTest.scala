@@ -1,6 +1,7 @@
 package play.hex
 
 import org.scalatest.{GivenWhenThen, WordSpec}
+import play.hex.side.{N, S}
 
 class SidesTest extends WordSpec with GivenWhenThen {
 
@@ -8,34 +9,34 @@ class SidesTest extends WordSpec with GivenWhenThen {
     ".clockwise" should {
       "get the correct side" in {
 
-        assert(N.clockwise === NE, "for N")
+        assert(N.clockwise === vertices.NE, "for N")
 
-        assert(NE.clockwise === SE, "for NE")
+        assert(vertices.NE.clockwise === vertices.SE, "for NE")
 
-        assert(SE.clockwise === S, "for SE")
+        assert(vertices.SE.clockwise === S, "for SE")
 
-        assert(S.clockwise === SW, "for S")
+        assert(S.clockwise === vertices.SW, "for S")
 
-        assert(SW.clockwise === NW, "for SW")
+        assert(vertices.SW.clockwise === vertices.NW, "for SW")
 
-        assert(NW.clockwise === N, "for NW")
+        assert(vertices.NW.clockwise === N, "for NW")
       }
     }
 
     ".antiClockwise" should {
       "get the correct side" in {
 
-        assert(N.antiClockwise === NW, "for N")
+        assert(N.antiClockwise === vertices.NW, "for N")
 
-        assert(NE.antiClockwise === N, "for NE")
+        assert(vertices.NE.antiClockwise === N, "for NE")
 
-        assert(SE.antiClockwise === NE, "for SE")
+        assert(vertices.SE.antiClockwise === vertices.NE, "for SE")
 
-        assert(S.antiClockwise === SE, "for S")
+        assert(S.antiClockwise === vertices.SE, "for S")
 
-        assert(SW.antiClockwise === S, "for SW")
+        assert(vertices.SW.antiClockwise === S, "for SW")
 
-        assert(NW.antiClockwise === SW, "for NW")
+        assert(vertices.NW.antiClockwise === vertices.SW, "for NW")
       }
     }
   }
