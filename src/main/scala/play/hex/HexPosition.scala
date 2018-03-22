@@ -8,47 +8,41 @@ final case class HexPosition(x: Int, y: Int) extends Ordered[HexPosition] {
 
   private val isEvenCol = y % 2 == 0
 
-  private def nextWhenEvenCol(s: Side): HexPosition = s match {
-    case N => HexPosition(x - 1, y)
-    case NW => HexPosition(x, y - 1)
-    case NE => HexPosition(x, y + 1)
-    case S => HexPosition(x + 1, y)
-    case SW => HexPosition(x + 1, y - 1)
-    case SE => HexPosition(x + 1, y + 1)
+  lazy val neighbourMap: Map[Side, HexPosition] = {
+    if (isEvenCol) Map(
+      N -> HexPosition(x - 1, y),
+      NW -> HexPosition(x, y - 1),
+      NE -> HexPosition(x, y + 1),
+      S -> HexPosition(x + 1, y),
+      SW -> HexPosition(x + 1, y - 1),
+      SE -> HexPosition(x + 1, y + 1))
+    else Map(
+      N -> HexPosition(x - 1, y),
+      NE -> HexPosition(x - 1, y + 1),
+      NW -> HexPosition(x - 1, y - 1),
+      SW -> HexPosition(x, y - 1),
+      SE -> HexPosition(x, y + 1),
+      S -> HexPosition(x + 1, y))
   }
 
-  private def nextWhenOddCol(s: Side): HexPosition = s match {
-    case N => HexPosition(x - 1, y)
-    case NE => HexPosition(x - 1, y + 1)
-    case NW => HexPosition(x - 1, y - 1)
-    case SW => HexPosition(x, y - 1)
-    case SE => HexPosition(x, y + 1)
-    case S => HexPosition(x + 1, y)
-  }
+  def neighbourAt(side: Side): HexPosition = neighbourMap(side)
 
-  val next: Side => HexPosition =
-    if (isEvenCol) nextWhenEvenCol else nextWhenOddCol
+  lazy val neighbours: Iterable[HexPosition] =
+    neighbourMap.values
 
-  def neighbours: Iterable[HexPosition] =
-    Sides.seq.map(next)
-
-  def neighboursWithSides: Iterable[(Side, HexPosition)] =
-    Sides.seq.map(s => (s, next(s)))
 }
 
 object HexPosition {
 
-  import scala.collection.mutable
-  import scala.ref.WeakReference
-
-  val cache: mutable.Map[(Int, Int), WeakReference[HexPosition]] = mutable.Map.empty
+  var cache: Map[(Int, Int), HexPosition] = Map.empty
 
   def apply(x: Int, y: Int): HexPosition = {
-    cache.get((x, y)) match {
-      case Some(WeakReference(p)) => p
+    val key = (x, y)
+    cache.get(key) match {
+      case Some(p) => p
       case _ =>
         val p = new HexPosition(x, y)
-        cache.put((x, y), WeakReference(p))
+        cache = cache.updated(key, p)
         p
     }
   }

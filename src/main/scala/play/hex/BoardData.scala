@@ -1,5 +1,6 @@
 package play.hex
 
+import play.hex.stores._
 import play.river.{RiverNetwork, RiverSegment}
 
 import scala.util.Random

@@ -3,8 +3,10 @@ package play.river
 import com.typesafe.scalalogging.LazyLogging
 import play._
 import play.hex._
+import play.hex.stores.HexStore
 
 import scala.util.Random
+import play.hex.syntax.NeighbourSyntax._
 
 
 /**
@@ -17,10 +19,12 @@ import scala.util.Random
   */
 class RiverNetwork(random: Random, hexes: HexStore) extends LazyLogging {
 
+  import hexes.implicits._
+
   private var _groups: Seq[HexGroup] = Nil
 
   private def neighboursNotInGroup(hex: Hex, group: Set[Hex]): Set[Hex] = {
-    hexes.neighbours(hex).toSet.diff(group)
+    hex.neighbours.toSet.diff(group)
   }
 
   private def applyRiversToBorders(hexGroups: Seq[HexGroup]) = {

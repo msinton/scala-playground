@@ -1,4 +1,4 @@
-package play.hex
+package play.hex.stores
 
 trait StoreableByPosition[P, T] {
 

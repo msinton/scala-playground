@@ -1,6 +1,7 @@
 package play.hex
 
 import org.scalatest.WordSpec
+import play.hex.stores.HexStore
 
 class HexStoreTest extends WordSpec {
 

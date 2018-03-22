@@ -1,6 +1,6 @@
-package play.hex
+package play.hex.stores
 
-import play.BordersHex
+import play.hex.BordersHex
 
 trait StoreableByEdge[T] extends StoreableByPosition[BordersHex, T] {
 

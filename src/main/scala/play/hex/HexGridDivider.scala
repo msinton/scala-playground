@@ -1,26 +1,30 @@
 package play.hex
 
 import play.HexGroup
+import play.hex.stores.HexStore
 import play.utils.Utils
 
 import scala.annotation.tailrec
 import scala.util.Random
+import play.hex.syntax.NeighbourSyntax._
 
 class HexGridDivider(random: Random) {
 
   def divideIntoRoughlyEqualRandomlyShaped(hexes: HexStore, numGroups: Int): Seq[HexGroup] = {
+
+    import hexes.implicits._
 
     type Consumed = Set[Hex]
     type Edges = IndexedSeq[Hex]
 
     def extend(edges: Edges, maxToAdd: Int, consumed: Consumed): Edges = {
       val hex = Utils.sample(edges, random)
-      val unassignedNeighbours = hex.toIndexedSeq.flatMap(hexes.neighbours(_).toSet.diff(consumed))
+      val unassignedNeighbours = hex.toIndexedSeq.flatMap(_.neighbours.toSet.diff(consumed))
       Utils.sample(unassignedNeighbours, random, maxToAdd)
     }
 
     def isEdge(hex: Hex, consumed: Consumed): Boolean =
-      hexes.neighbours(hex).toSet.diff(consumed).nonEmpty
+      hex.neighbours.toSet.diff(consumed).nonEmpty
 
     def growExtensions(edges: Seq[Edges], increasesDesired: Seq[Int], consumed: Consumed): (Seq[Edges], Consumed) = {
 
