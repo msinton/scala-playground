@@ -1,7 +1,7 @@
 package play.hex.stores
 
 import play.hex.{BordersHex, Hex}
-import play.hex.vertices.Point
+import play.hex.vertex.Point
 import play.river.RiverSegment
 
 class RiverStore(private[hex] var byPosition: Map[BordersHex, RiverSegment]) extends StoreableByEdge[RiverSegment] {

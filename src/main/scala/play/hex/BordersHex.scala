@@ -3,7 +3,7 @@ package play.hex
 import play.hex.side._
 
 // TODO rename as Edge
-case class BordersHex(hexPosition: HexPosition, side: Side)
+case class BordersHex private(hexPosition: HexPosition, side: Side)
 
 object BordersHex {
 

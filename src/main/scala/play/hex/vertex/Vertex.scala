@@ -1,4 +1,4 @@
-package play.hex.vertices
+package play.hex.vertex
 
 trait Vertex
 case object NW extends Vertex

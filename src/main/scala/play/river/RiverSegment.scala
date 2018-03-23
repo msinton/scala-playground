@@ -1,7 +1,6 @@
 package play.river
 
-import play.hex.vertices.Point
-import play.hex.Hex
+import play.hex.vertex.Point
 
 case class RiverSegment(flow: Flow)
 
