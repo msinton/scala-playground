@@ -1,9 +1,19 @@
 package play.hex
 
 import play.hex.side._
+import play.hex.vertex.Point
 
 // TODO rename as Edge
-case class BordersHex private(hexPosition: HexPosition, side: Side)
+case class BordersHex private(hexPosition: HexPosition, side: Side) {
+
+  lazy val points = Set(
+    Point(hexPosition, side.clockwiseVertex),
+    Point(hexPosition, side.antiClockwiseVertex)
+  )
+
+  def otherPoint(point: Point): Point = (points - point).head
+
+}
 
 object BordersHex {
 
