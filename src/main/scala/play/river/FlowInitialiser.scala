@@ -27,11 +27,11 @@ class FlowInitialiser(random: Random) extends LazyLogging {
       .toMap
 
     logger.debug(s"Got sources: $rivers")
-    continueRiverFlow((edges.toSet -- rivers.keySet).toIndexedSeq, rivers)
+    continueRiverFlow(edges.toSet -- rivers.keySet, rivers)
   }
 
   @tailrec
-  private final def createRiversFromRandom(edges: RemainingEdges, rivers: RiverMap = Map.empty): Map[BordersHex, RiverSegment] = {
+  private final def createRiversFromRandom(edges: RemainingEdges, rivers: RiverMap = Map.empty): RiverMap = {
     Utils.sample(edges.toIndexedSeq, random) match {
       case Some(edge) =>
         val river = setRandomFlow(edge)
