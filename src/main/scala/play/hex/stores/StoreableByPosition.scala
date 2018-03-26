@@ -7,7 +7,7 @@ trait StoreableByPosition[P, T] {
 
   def toPos(t: T): Option[P] = toPosition.get(t)
 
-  def at(p: P): Option[T] = byPosition.get(p)
+  def atPos(p: P): Option[T] = byPosition.get(p)
 
   def size: Int = byPosition.size
 

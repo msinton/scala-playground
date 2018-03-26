@@ -1,5 +1,7 @@
 package play.hex.syntax
 
+import play.hex.side.Side
+
 /**
   * Provides the implicits in order to use neighbour syntax on HasNeighbours instances.
   *
@@ -13,6 +15,9 @@ object NeighbourSyntax {
 
     def neighbours(implicit a: HasNeighbours[A]): Iterable[A] =
       a.neighbours(value)
+
+    def sideBetween(implicit a: HasSides[A]): Exp[A] =
+      a.sideBetween(value)
   }
 
   implicit class NeighbourMapOps[K, A](value: A) {
