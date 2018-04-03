@@ -20,13 +20,13 @@ class BoardData(numPlayers: Int) {
   
   val hexes: HexStore = new HexStore(setupHexes.toMap)
 
-  val people: StoreableByHexPosition[Person] = new StoreByHexPosition(Map.empty[HexPosition, Person])
-  val walls: StoreableByHexPosition[Wall] = new StoreByHexPosition(Map.empty[HexPosition, Wall])
+  val people: StorableByHexPosition[Person] = new StoreByHexPosition(Map.empty[HexPosition, Person])
+  val walls: StorableByHexPosition[Wall] = new StoreByHexPosition(Map.empty[HexPosition, Wall])
 
   val random = new Random()
 
   // TODO think about groups - what I will do with them beyond testing
-  val rivers: StoreableByEdge[RiverSegment] = {
+  val rivers: StorableByEdge[RiverSegment] = {
     val (rs, _) = new RiverNetwork(random, hexes).generate(numPlayers)
     new StoreByEdge[RiverSegment](rs)
   }

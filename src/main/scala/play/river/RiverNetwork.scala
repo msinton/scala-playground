@@ -32,7 +32,7 @@ class RiverNetwork(random: Random, hexes: HexStore) extends LazyLogging {
       group <- hexGroups.tail
       hex <- group
       boundaryHex <- neighboursNotInGroup(hex, group)
-      side <- hex.sideBetween.apply(boundaryHex)
+      side <- hex.sideBetween(boundaryHex)
     } yield (hex, side)
 
     hexBoundaries.map({
@@ -50,9 +50,6 @@ class RiverNetwork(random: Random, hexes: HexStore) extends LazyLogging {
 
   def groups: Seq[HexGroup] = _groups
 
-  /**
-    * Enables the flow to be setup, does nothing if already setup.
-    */
   final def setupFlow(edges: Seq[BordersHex]): Map[BordersHex, RiverSegment] = {
     new FlowInitialiser(random).setup(edges)
   }

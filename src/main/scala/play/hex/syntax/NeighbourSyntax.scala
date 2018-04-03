@@ -16,8 +16,8 @@ object NeighbourSyntax {
     def neighbours(implicit a: HasNeighbours[A]): Iterable[A] =
       a.neighbours(value)
 
-    def sideBetween(implicit a: HasSides[A]): Exp[A] =
-      a.sideBetween(value)
+    def sideBetween(b: A)(implicit a: HasSides[A]): Option[Side] =
+      a.sideBetween(value, b)
   }
 
   implicit class NeighbourMapOps[K, A](value: A) {

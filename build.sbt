@@ -1,10 +1,9 @@
 import sbt.Keys.libraryDependencies
-import sbt.util
 
 lazy val commonSettings = Seq(
   scalaVersion := "2.12.4",
   organization := "play",
-  logLevel := util.Level.Debug
+  logLevel := Level.Info
 )
 lazy val scalatest = "org.scalatest" %% "scalatest" % "3.0.5"
 lazy val SerialTest = config("serial") extend Test

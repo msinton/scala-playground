@@ -1,6 +1,6 @@
 package play.hex.stores
 
-trait StoreableByPosition[P, T] {
+trait StorableByPosition[P, T] {
 
   private[hex] var byPosition: Map[P, T]
   private[hex] var toPosition: Map[T, P] = byPosition.map(_.swap)

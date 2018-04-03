@@ -2,9 +2,9 @@ package play.hex.stores
 
 import play.hex._
 import play.hex.side.Side
-import play.hex.syntax.{Exp, HasNeighbourMap, HasNeighbours, HasSides}
+import play.hex.syntax.{HasNeighbourMap, HasNeighbours, HasSides}
 
-trait StoreableByHexPosition[T] extends StoreableByPosition[HexPosition, T] {
+trait StorableByHexPosition[T] extends StorableByPosition[HexPosition, T] {
   def at(x: Int, y: Int): Option[T] = byPosition.get(HexPosition(x, y))
 
   private def findNeighbourPosition(p: HexPosition, neighbourHex: T): Option[(Side, HexPosition)] =
@@ -12,7 +12,7 @@ trait StoreableByHexPosition[T] extends StoreableByPosition[HexPosition, T] {
       case (_, neighbourP) => atPos(neighbourP).contains(neighbourHex)
     })
 
-  def getSideBetween(t: T, neighbour: T): Option[Side] =
+  def sideBetween(t: T, neighbour: T): Option[Side] =
     for {
       p <- toPos(t)
       (side, _) <- findNeighbourPosition(p, neighbour)
@@ -47,15 +47,12 @@ trait StoreableByHexPosition[T] extends StoreableByPosition[HexPosition, T] {
     implicit val hexHasNeighbourMap: HasNeighbourMap[Side, T] =
       (value: T) => neighbourMap(value)
 
-    implicit val hasSides: HasSides[T] = new HasSides[T] {
-      override def sideBetween(value: T): Exp[T] = new Exp[T] {
-        override def apply(n: T): Option[Side] = getSideBetween(value, n)
-      }
-    }
+    implicit val hasSides: HasSides[T] =
+      (value: T, neighbour: T) => sideBetween(value, neighbour)
   }
 }
 
-class StoreByHexPosition[T](private[hex] var byPosition: Map[HexPosition, T]) extends StoreableByHexPosition[T] {
+class StoreByHexPosition[T](private[hex] var byPosition: Map[HexPosition, T]) extends StorableByHexPosition[T] {
 }
 
 

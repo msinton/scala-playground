@@ -9,7 +9,6 @@ import scala.annotation.tailrec
 import scala.util.Random
 
 
-// TODO rename as RiverFlowCreator?
 class FlowInitialiser(random: Random) extends LazyLogging {
 
   type RemainingEdges = Iterable[BordersHex]

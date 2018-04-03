@@ -3,7 +3,7 @@ package play.hex.stores
 import play.hex.{Hex, HexPosition, HexType}
 
 
-class HexStore(private[hex] var byPosition: Map[HexPosition, Hex]) extends StoreableByHexPosition[Hex] {
+class HexStore(private[hex] var byPosition: Map[HexPosition, Hex]) extends StorableByHexPosition[Hex] {
 
   private[hex] var _byType: Map[HexType, Map[HexPosition, Hex]] =
     byPosition

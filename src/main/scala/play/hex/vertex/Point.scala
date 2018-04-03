@@ -35,7 +35,7 @@ object Point {
     * There are two possible configurations of a point with respect to the surrounding hexes.
     *
     * 1)  \_       or  2)  _/
-    * /                  \
+    * .  /                  \
     *
     * Normalize Point so that in configuration:
     * (1) the hexPosition is chosen with vertex E

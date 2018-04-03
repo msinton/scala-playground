@@ -11,7 +11,9 @@ case class RiverSegment(flow: Flow) {
 object RiverSegment {
 
   def apply(flowFrom: Point, edge: BordersHex): RiverSegment =
-    RiverSegment(Flow(flowFrom, edge.otherPoint(flowFrom)))
+    edge.otherPoint(flowFrom) match {
+      case Some(flowTo) => RiverSegment(Flow(flowFrom, flowTo))
+    }
 
 }
 

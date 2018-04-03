@@ -11,7 +11,10 @@ case class BordersHex private(hexPosition: HexPosition, side: Side) {
     Point(hexPosition, side.antiClockwiseVertex)
   )
 
-  def otherPoint(point: Point): Point = (points - point).head
+  def otherPoint(point: Point): Option[Point] = (points - point).toList match {
+    case List(other) => Option(other)
+    case _ => None
+  }
 
 }
 

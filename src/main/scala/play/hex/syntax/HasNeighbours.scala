@@ -7,13 +7,9 @@ trait HasNeighbours[A] {
 }
 
 trait HasNeighbourMap[K, A] {
-  def neighbourMap(hex: A): Map[K, A]
+  def neighbourMap(value: A): Map[K, A]
 }
 
 trait HasSides[A] {
-  def sideBetween(value: A): Exp[A]
-}
-
-trait Exp[A] {
-  def apply(n: A): Option[Side]
+  def sideBetween(value: A, neighbour: A): Option[Side]
 }
