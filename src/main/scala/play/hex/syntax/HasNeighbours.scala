@@ -1,5 +1,6 @@
 package play.hex.syntax
 
+import play.hex.BordersHex
 import play.hex.side.Side
 
 trait HasNeighbours[A] {
@@ -12,4 +13,8 @@ trait HasNeighbourMap[K, A] {
 
 trait HasSides[A] {
   def sideBetween(value: A, neighbour: A): Option[Side]
+}
+
+trait HasEdges[A] {
+  def edges(value: A): Iterable[BordersHex]
 }

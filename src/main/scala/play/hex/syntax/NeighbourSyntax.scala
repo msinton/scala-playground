@@ -1,5 +1,6 @@
 package play.hex.syntax
 
+import play.hex.BordersHex
 import play.hex.side.Side
 
 /**
@@ -18,6 +19,9 @@ object NeighbourSyntax {
 
     def sideBetween(b: A)(implicit a: HasSides[A]): Option[Side] =
       a.sideBetween(value, b)
+
+    def edges(implicit a: HasEdges[A]): Iterable[BordersHex] =
+      a.edges(value)
   }
 
   implicit class NeighbourMapOps[K, A](value: A) {

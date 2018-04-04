@@ -7,6 +7,7 @@ import play.utils.Utils
 
 import scala.annotation.tailrec
 import scala.util.Random
+import play.implicits._
 
 
 class FlowInitialiser(random: Random) extends LazyLogging {
@@ -14,13 +15,13 @@ class FlowInitialiser(random: Random) extends LazyLogging {
   type RemainingEdges = Iterable[BordersHex]
   type RiverMap = Map[BordersHex, RiverSegment]
 
-  def setup(edges: RemainingEdges): RiverMap = {
+  final def setup(edges: RemainingEdges): RiverMap = {
     val (remainingEdges, rivers) = createFlowsFromSources(edges)
     rivers ++ createRiversFromRandom(remainingEdges)
   }
 
   // A source is a point where there are 3 rivers connected
-  def createFlowsFromSources(edges: RemainingEdges): (RemainingEdges, RiverMap) = {
+  final def createFlowsFromSources(edges: RemainingEdges): (RemainingEdges, RiverMap) = {
     val rivers = findSources(edges)
       .flatMap(point => point.edges.map(edge => (edge, RiverSegment(point, edge))))
       .toMap
@@ -31,7 +32,7 @@ class FlowInitialiser(random: Random) extends LazyLogging {
 
   @tailrec
   private final def createRiversFromRandom(edges: RemainingEdges, rivers: RiverMap = Map.empty): RiverMap = {
-    Utils.sample(edges.toIndexedSeq, random) match {
+    random.sample(edges.toIndexedSeq) match {
       case Some(edge) =>
         val river = setRandomFlow(edge)
         val pivotPoint = river.flow.from
@@ -47,7 +48,7 @@ class FlowInitialiser(random: Random) extends LazyLogging {
     }
   }
 
-  private def setRandomFlow(edge: BordersHex): RiverSegment = {
+  private final def setRandomFlow(edge: BordersHex): RiverSegment = {
     val Seq(from, to) = if (random.nextBoolean()) edge.points.toSeq else edge.points.toSeq.reverse
     RiverSegment(Flow(from, to))
   }
@@ -68,7 +69,7 @@ class FlowInitialiser(random: Random) extends LazyLogging {
     else continueRiverFlow(edges.toSet -- nextRivers.keySet, rivers ++ nextRivers)
   }
 
-  def findSources(edges: RemainingEdges): Set[Point] = {
+  private[river] final def findSources(edges: RemainingEdges): Set[Point] = {
     edges.flatMap(_.points)
       .groupBy(identity)
       .filter(_._2.size > 2)

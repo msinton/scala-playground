@@ -14,6 +14,17 @@ case class Point private(hexPosition: HexPosition, vertex: Vertex) {
       BordersHex(hexPosition, side.S),
       BordersHex(hexPosition.neighbourAt(side.SE), side.SW)
     )
+
+  lazy val hexPositions: Set[HexPosition] =
+    if (vertex == E) Set(
+      hexPosition,
+      hexPosition.neighbourAt(side.NE),
+      hexPosition.neighbourAt(side.SE)
+    ) else Set(
+      hexPosition,
+      hexPosition.neighbourAt(side.SE),
+      hexPosition.neighbourAt(side.S)
+    )
 }
 
 object Point {

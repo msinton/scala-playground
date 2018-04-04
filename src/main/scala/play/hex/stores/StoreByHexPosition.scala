@@ -2,7 +2,7 @@ package play.hex.stores
 
 import play.hex._
 import play.hex.side.Side
-import play.hex.syntax.{HasNeighbourMap, HasNeighbours, HasSides}
+import play.hex.syntax.{HasEdges, HasNeighbourMap, HasNeighbours, HasSides}
 
 trait StorableByHexPosition[T] extends StorableByPosition[HexPosition, T] {
   def at(x: Int, y: Int): Option[T] = byPosition.get(HexPosition(x, y))
@@ -11,12 +11,6 @@ trait StorableByHexPosition[T] extends StorableByPosition[HexPosition, T] {
     p.neighbourMap.find({
       case (_, neighbourP) => atPos(neighbourP).contains(neighbourHex)
     })
-
-  def sideBetween(t: T, neighbour: T): Option[Side] =
-    for {
-      p <- toPos(t)
-      (side, _) <- findNeighbourPosition(p, neighbour)
-    } yield side
 
   private def hexPosToNeighbours(hexPos: HexPosition) =
     for {
@@ -40,6 +34,22 @@ trait StorableByHexPosition[T] extends StorableByPosition[HexPosition, T] {
       .map(hexPosToNeighboursWithSide(_).toMap)
       .getOrElse(Map.empty)
 
+  def sideBetween(t: T, neighbour: T): Option[Side] =
+    for {
+      p <- toPos(t)
+      (side, _) <- findNeighbourPosition(p, neighbour)
+    } yield side
+
+  def edges(t: T): Iterable[BordersHex] = {
+    toPos(t).map { hexPos =>
+      neighbours(t)
+        .map(sideBetween(t, _))
+        .collect {
+          case Some(side) => BordersHex(hexPos, side)
+        }
+    }.getOrElse(Nil)
+  }
+
   object implicits {
     implicit val hasNeighbours: HasNeighbours[T] =
       (value: T) => neighbours(value)
@@ -49,8 +59,12 @@ trait StorableByHexPosition[T] extends StorableByPosition[HexPosition, T] {
 
     implicit val hasSides: HasSides[T] =
       (value: T, neighbour: T) => sideBetween(value, neighbour)
+
+    implicit val hasEdges: HasEdges[T] =
+      (value: T) => edges(value)
   }
 }
+
 
 class StoreByHexPosition[T](private[hex] var byPosition: Map[HexPosition, T]) extends StorableByHexPosition[T] {
 }

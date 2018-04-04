@@ -1,12 +1,11 @@
 package play.river
 
 import com.typesafe.scalalogging.LazyLogging
-import play._
 import play.hex._
 import play.hex.stores.HexStore
+import play.hex.syntax.NeighbourSyntax._
 
 import scala.util.Random
-import play.hex.syntax.NeighbourSyntax._
 
 
 /**

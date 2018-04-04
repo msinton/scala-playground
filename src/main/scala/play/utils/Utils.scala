@@ -1,7 +1,5 @@
 package play.utils
-import scala.annotation.tailrec
 import scala.collection.mutable
-import scala.util.Random
 
 trait HasWeighting {
   def weighting: Int
@@ -59,59 +57,6 @@ object Utils {
     */
   def createInverseMapping[X <: AnyRef, Z](list: Seq[Z])(f: ToProperties[Z, X]): (collection.Map[X, Set[Z]]) = {
     createInverseMappingWithValueTransform[Z, X, Z](list)({ z: Z => z})(f)
-  }
-
-  /**
-    * removes an element randomly from the buffer and returns it.
-    *
-    * @tparam T the type contained by the buffer
-    * @return Some(element) removed. None if the list was empty
-    */
-  def randomRemove[T](list: mutable.Buffer[T], random: Random): Option[T] = {
-    if (list.nonEmpty) {
-      val e = list.remove(random.nextInt(list.size))
-      Option(e)
-    }
-    else
-      None
-  }
-
-  def getRandomWeighted[T](list: List[T], weightingsTotal: Int, weighting: T => Int, random: Random): T = {
-    @tailrec
-    def getElement(n: Int, acc: Int, x: T, xs: List[T]): T = {
-      if (n < acc || xs.isEmpty) {
-        x
-      } else {
-        getElement(n, acc + weighting(x), xs.head, xs.tail)
-      }
-    }
-    getElement(random.nextInt(weightingsTotal), 0, list.head, list.tail)
-  }
-
-  def getRandomWeighted[T <: HasWeighting](list: List[T], weightingsTotal: Int, random: Random): T =
-    getRandomWeighted(list, weightingsTotal, {t: T => t.weighting}, random)
-
-  def getRandom[T](list: Iterable[T], random: Random): T = {
-    val index = random.nextInt(list.size)
-    list.toBuffer(index)
-  }
-  def sample[T](list: IndexedSeq[T], random: Random): Option[T] = {
-    if (list.isEmpty) None else {
-      val index = random.nextInt(list.size)
-      Option(list(index))
-    }
-  }
-
-  def sample[T](list: IndexedSeq[T], random: Random, n: Int): IndexedSeq[T] = {
-    if (list.size <= n) list else {
-      val indices = list.indices.toBuffer
-      val result = mutable.ArrayBuffer.empty[T]
-      while (result.size < n) {
-        val ind = indices.remove(random.nextInt(indices.size))
-        result.append(list(ind))
-      }
-      result
-    }
   }
 
 }

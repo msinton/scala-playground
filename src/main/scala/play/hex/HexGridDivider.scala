@@ -1,12 +1,11 @@
 package play.hex
 
-import play.HexGroup
 import play.hex.stores.HexStore
-import play.utils.Utils
+import play.hex.syntax.NeighbourSyntax._
+import play.implicits._
 
 import scala.annotation.tailrec
 import scala.util.Random
-import play.hex.syntax.NeighbourSyntax._
 
 class HexGridDivider(random: Random) {
 
@@ -18,9 +17,9 @@ class HexGridDivider(random: Random) {
     type Edges = IndexedSeq[Hex]
 
     def extend(edges: Edges, maxToAdd: Int, consumed: Consumed): Edges = {
-      val hex = Utils.sample(edges, random)
+      val hex = random.sample(edges)
       val unassignedNeighbours = hex.toIndexedSeq.flatMap(_.neighbours.toSet.diff(consumed))
-      Utils.sample(unassignedNeighbours, random, maxToAdd)
+      random.sample(unassignedNeighbours, maxToAdd)
     }
 
     def isEdge(hex: Hex, consumed: Consumed): Boolean =
@@ -32,8 +31,7 @@ class HexGridDivider(random: Random) {
         .scanLeft((IndexedSeq.empty[Hex], consumed))({
           case ((_, accConsumed), (edge, increase)) =>
             val extended = extend(edge, increase, accConsumed)
-            val newConsumed = accConsumed ++ extended
-            (extended, newConsumed)
+            (extended, accConsumed ++ extended)
         }).unzip
 
       (nextExtendedSeq.tail, newConsumedSeq.last)
@@ -54,7 +52,7 @@ class HexGridDivider(random: Random) {
       }
     }
 
-    val groupSeeds = Utils.sample(hexes.all.toIndexedSeq, random, numGroups)
+    val groupSeeds = random.sample(hexes.all.toIndexedSeq, numGroups)
 
     loop(
       groups = groupSeeds.map(Set(_)),
