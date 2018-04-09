@@ -1,7 +1,6 @@
 package play.hex
 
 import play.hex.stores.HexStore
-import play.hex.syntax.NeighbourSyntax._
 import play.implicits._
 
 import scala.annotation.tailrec

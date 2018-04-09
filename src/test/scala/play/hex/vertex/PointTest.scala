@@ -1,8 +1,9 @@
 package play.hex.vertex
 
 import org.scalatest.WordSpec
-import play.hex.{BordersHex, HexPosition}
-import play.hex.side
+import play.hex.graph.side.S
+import play.hex.graph.vertex._
+import play.hex.{BordersHex, graph, side}
 
 class PointTest extends WordSpec {
 
@@ -67,9 +68,9 @@ class PointTest extends WordSpec {
       val edges = p.edges
 
       "have edges that surround the point" in {
-        assert(edges.contains(BordersHex(hex, side.SE)))
-        assert(edges.contains(BordersHex(hex, side.NE)))
-        assert(edges.contains(BordersHex(HexPosition(0, 1), side.S)))
+        assert(edges.contains(BordersHex(hex, graph.side.SE)))
+        assert(edges.contains(BordersHex(hex, graph.side.NE)))
+        assert(edges.contains(BordersHex(HexPosition(0, 1), S)))
       }
       "have edges in common with surrounding points" in {
         val pointAbove = Point(hex, NE)
@@ -87,9 +88,9 @@ class PointTest extends WordSpec {
       val edges = p.edges
 
       "have edges that surround the point" in {
-        assert(edges.contains(BordersHex(hex, side.SE)))
-        assert(edges.contains(BordersHex(hex, side.S)))
-        assert(edges.contains(BordersHex(HexPosition(1, 0), side.NE)))
+        assert(edges.contains(BordersHex(hex, graph.side.SE)))
+        assert(edges.contains(BordersHex(hex, graph.side.S)))
+        assert(edges.contains(BordersHex(HexPosition(1, 0), graph.side.NE)))
       }
       "have edges in common with surrounding points" in {
         val pointAbove = Point(hex, E)

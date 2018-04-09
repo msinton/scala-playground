@@ -1,6 +1,7 @@
 package play.hex
 
 import org.scalatest.WordSpec
+import play.hex.graph.side.N
 
 class HexPositionTest extends WordSpec {
 
@@ -9,7 +10,7 @@ class HexPositionTest extends WordSpec {
       "get the correct neighbour" in {
 
         val p = HexPosition(0, 0)
-        val neighbour = p.neighbourAt(side.N)
+        val neighbour = p.neighbourAt(N)
 
         assert(neighbour.x == -1)
         assert(neighbour.y == 0)

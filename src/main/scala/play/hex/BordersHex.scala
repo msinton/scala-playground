@@ -1,7 +1,8 @@
 package play.hex
 
-import play.hex.side._
-import play.hex.vertex.Point
+import play.hex.graph.HexPosition
+import play.hex.graph.side._
+import play.hex.graph.vertex.Point
 
 // TODO rename as Edge
 case class BordersHex private(hexPosition: HexPosition, side: Side) {

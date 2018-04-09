@@ -1,7 +1,8 @@
 package play.hex.stores
 
 import play.hex._
-import play.hex.side.Side
+import play.hex.graph.HexPosition
+import play.hex.graph.side.Side
 import play.hex.syntax.{HasEdges, HasNeighbourMap, HasNeighbours, HasSides}
 
 trait StorableByHexPosition[T] extends StorableByPosition[HexPosition, T] {
@@ -50,6 +51,9 @@ trait StorableByHexPosition[T] extends StorableByPosition[HexPosition, T] {
     }.getOrElse(Nil)
   }
 
+  def edges(p: HexPosition): Iterable[BordersHex] =
+    atPos(p).map(edges).getOrElse(Nil)
+
   object implicits {
     implicit val hasNeighbours: HasNeighbours[T] =
       (value: T) => neighbours(value)
@@ -59,9 +63,6 @@ trait StorableByHexPosition[T] extends StorableByPosition[HexPosition, T] {
 
     implicit val hasSides: HasSides[T] =
       (value: T, neighbour: T) => sideBetween(value, neighbour)
-
-    implicit val hasEdges: HasEdges[T] =
-      (value: T) => edges(value)
   }
 }
 

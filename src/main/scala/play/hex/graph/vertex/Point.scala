@@ -1,6 +1,7 @@
-package play.hex.vertex
+package play.hex.graph.vertex
 
-import play.hex.{BordersHex, HexPosition, side}
+import play.hex.graph._
+import play.hex.BordersHex
 
 case class Point private(hexPosition: HexPosition, vertex: Vertex) {
 
@@ -25,6 +26,10 @@ case class Point private(hexPosition: HexPosition, vertex: Vertex) {
       hexPosition.neighbourAt(side.SE),
       hexPosition.neighbourAt(side.S)
     )
+
+  def edgeBetween(point: Point): Option[BordersHex] =
+    edges.find(_.points.contains(point))
+
 }
 
 object Point {
@@ -64,4 +69,16 @@ object Point {
       case SE => fetchFromCache(hexPosition, SE)
     }
   }
+
+  def clockwise(hexPosition: HexPosition, from: Vertex): Point =
+    apply(hexPosition, from.clockwise)
+
+  def antiClockwise(hexPosition: HexPosition, from: Vertex): Point =
+    apply(hexPosition, from.antiClockwise)
+
+  def rotate(hexPosition: HexPosition)(rotation: Rotation)(from: Vertex): Point = rotation match {
+    case Clockwise => clockwise(hexPosition, from)
+    case AntiClockwise => antiClockwise(hexPosition, from)
+  }
+
 }

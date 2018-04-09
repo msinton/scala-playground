@@ -1,7 +1,7 @@
 package play.hex.syntax
 
 import play.hex.BordersHex
-import play.hex.side.Side
+import play.hex.graph.side.Side
 
 trait HasNeighbours[A] {
   def neighbours(value: A): Iterable[A]

@@ -1,6 +1,7 @@
 package play.hex.stores
 
-import play.hex.{Hex, HexPosition, HexType}
+import play.hex.graph.HexPosition
+import play.hex.{Hex, HexType}
 
 
 class HexStore(private[hex] var byPosition: Map[HexPosition, Hex]) extends StorableByHexPosition[Hex] {

@@ -1,12 +1,13 @@
-package play.hex
+package play.hex.graph
 
-import play.hex.side._
+import play.hex.graph.side._
 
 final case class HexPosition(x: Int, y: Int) extends Ordered[HexPosition] {
 
   import scala.math.Ordered.orderingToOrdered
 
-  override def compare(that: HexPosition): Int = (x, y) compare (that.x, that.y)
+  override def compare(that: HexPosition): Int =
+    (x, y) compare (that.x, that.y)
 
   private val isEvenCol = y % 2 == 0
 
@@ -29,11 +30,11 @@ final case class HexPosition(x: Int, y: Int) extends Ordered[HexPosition] {
     )
   }
 
-  def neighbourAt(side: Side): HexPosition = neighbourMap(side)
+  def neighbourAt(side: Side): HexPosition =
+    neighbourMap(side)
 
   lazy val neighbours: Iterable[HexPosition] =
     neighbourMap.values
-
 }
 
 object HexPosition {

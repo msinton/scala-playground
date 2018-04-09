@@ -3,7 +3,7 @@ package play.river
 import com.typesafe.scalalogging.LazyLogging
 import play.hex._
 import play.hex.stores.HexStore
-import play.hex.syntax.NeighbourSyntax._
+import play.implicits._
 
 import scala.util.Random
 

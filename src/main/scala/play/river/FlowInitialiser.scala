@@ -2,13 +2,11 @@ package play.river
 
 import com.typesafe.scalalogging.LazyLogging
 import play.hex.BordersHex
-import play.hex.vertex.Point
-import play.utils.Utils
+import play.hex.graph.vertex.Point
 
 import scala.annotation.tailrec
 import scala.util.Random
 import play.implicits._
-
 
 class FlowInitialiser(random: Random) extends LazyLogging {
 
@@ -32,7 +30,7 @@ class FlowInitialiser(random: Random) extends LazyLogging {
 
   @tailrec
   private final def createRiversFromRandom(edges: RemainingEdges, rivers: RiverMap = Map.empty): RiverMap = {
-    random.sample(edges.toIndexedSeq) match {
+    random.sample(edges) match {
       case Some(edge) =>
         val river = setRandomFlow(edge)
         val pivotPoint = river.flow.from

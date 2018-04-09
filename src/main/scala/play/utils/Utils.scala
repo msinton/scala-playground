@@ -1,10 +1,6 @@
 package play.utils
 import scala.collection.mutable
 
-trait HasWeighting {
-  def weighting: Int
-}
-
 object Utils {
 
   type ToProperties[A, B] = A => Traversable[B]

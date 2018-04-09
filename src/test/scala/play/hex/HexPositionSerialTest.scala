@@ -1,7 +1,8 @@
 package play.hex
 
 import org.scalatest.{SequentialNestedSuiteExecution, WordSpec}
-import play.hex.side.NE
+import play.hex.graph.HexPosition
+import play.hex.graph.side.{N, NE}
 
 class HexPositionSerialTest extends WordSpec {
 
@@ -27,7 +28,7 @@ class HexPositionSerialTest extends WordSpec {
       "get the correct neighbour" in {
 
         val p = HexPosition(0, 0)
-        val neighbour = p.neighbourAt(side.N)
+        val neighbour = p.neighbourAt(N)
 
         assert(neighbour.x == -1)
         assert(neighbour.y == 0)

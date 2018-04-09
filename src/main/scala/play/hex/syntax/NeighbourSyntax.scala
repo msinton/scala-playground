@@ -1,7 +1,7 @@
 package play.hex.syntax
 
 import play.hex.BordersHex
-import play.hex.side.Side
+import play.hex.graph.side.Side
 
 /**
   * Provides the implicits in order to use neighbour syntax on HasNeighbours instances.
@@ -10,7 +10,7 @@ import play.hex.side.Side
   * hex.neighbours
   * (even though hex does not have the def, the hex is implicitly converted into a NeighbourOps[Hex])
   */
-object NeighbourSyntax {
+trait NeighbourSyntax {
 
   implicit class NeighbourOps[A](value: A) {
 

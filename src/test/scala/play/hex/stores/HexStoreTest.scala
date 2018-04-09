@@ -2,7 +2,8 @@ package play.hex.stores
 
 import org.scalatest.WordSpec
 import play.hex._
-import play.hex.side.{NE, SW}
+import play.hex.graph.side.{NE, SW}
+import play.hex.side.SW
 
 class HexStoreTest extends WordSpec {
 

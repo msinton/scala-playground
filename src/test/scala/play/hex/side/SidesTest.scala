@@ -1,6 +1,7 @@
 package play.hex.side
 
 import org.scalatest.{GivenWhenThen, WordSpec}
+import play.hex.graph.side._
 
 class SidesTest extends WordSpec with GivenWhenThen {
 

@@ -1,8 +1,9 @@
 package play.river
 
 import org.scalatest.{GivenWhenThen, WordSpec}
+import play.hex.graph.side.{NE, S, SE}
 import play.hex.side._
-import play.hex.{BordersHex, HexPosition}
+import play.hex.BordersHex
 
 import scala.util.Random
 

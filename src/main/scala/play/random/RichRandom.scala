@@ -1,6 +1,6 @@
 package play.random
 
-import play.utils.HasWeighting
+import play.hex.HasWeighting
 
 import scala.annotation.tailrec
 import scala.collection.mutable
@@ -47,6 +47,13 @@ class RichRandom(random: Random) {
     if (list.isEmpty) None else {
       val index = random.nextInt(list.size)
       Option(list(index))
+    }
+  }
+
+  def sample[T](list: Iterable[T]): Option[T] = {
+    if (list.isEmpty) None else {
+      val index = random.nextInt(list.size)
+      list.drop(index).headOption
     }
   }
 
