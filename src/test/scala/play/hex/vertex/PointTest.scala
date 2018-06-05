@@ -1,6 +1,7 @@
 package play.hex.vertex
 
 import org.scalatest.WordSpec
+import play.hex.graph.HexPosition
 import play.hex.graph.side.S
 import play.hex.graph.vertex._
 import play.hex.{BordersHex, graph, side}

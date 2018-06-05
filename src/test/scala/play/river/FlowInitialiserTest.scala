@@ -4,6 +4,7 @@ import org.scalatest.{GivenWhenThen, WordSpec}
 import play.hex.graph.side.{NE, S, SE}
 import play.hex.side._
 import play.hex.BordersHex
+import play.hex.graph.HexPosition
 
 import scala.util.Random
 

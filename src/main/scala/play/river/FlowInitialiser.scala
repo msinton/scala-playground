@@ -28,6 +28,7 @@ class FlowInitialiser(random: Random) extends LazyLogging {
     continueRiverFlow(edges.toSet -- rivers.keySet, rivers)
   }
 
+  // Take a random starting point for the river flow
   @tailrec
   private final def createRiversFromRandom(edges: RemainingEdges, rivers: RiverMap = Map.empty): RiverMap = {
     random.sample(edges) match {
@@ -35,7 +36,7 @@ class FlowInitialiser(random: Random) extends LazyLogging {
         val river = setRandomFlow(edge)
         val pivotPoint = river.flow.from
         // get edges of pivotPoint without rivers and for each set flow
-        val nextRivers = remainingEdgesOf(pivotPoint, edges.toSet - edge)
+        val nextRivers = intersectingEdges(pivotPoint, edges.toSet - edge)
           .map(e => (e, RiverSegment(flowFrom = pivotPoint, e)))
           .toMap + (edge -> river)
 
@@ -51,7 +52,7 @@ class FlowInitialiser(random: Random) extends LazyLogging {
     RiverSegment(Flow(from, to))
   }
 
-  private final def remainingEdgesOf(point: Point, edges: RemainingEdges): Set[BordersHex] =
+  private final def intersectingEdges(point: Point, edges: RemainingEdges): Set[BordersHex] =
     point.edges.intersect(edges.toSet)
 
   @tailrec
@@ -59,7 +60,7 @@ class FlowInitialiser(random: Random) extends LazyLogging {
     val nextRivers = rivers.flatMap({
       case (_, river) =>
         val flowFrom = river.flow.to
-        remainingEdgesOf(flowFrom, edges)
+        intersectingEdges(flowFrom, edges)
           .map(e => (e, RiverSegment(flowFrom, e)))
     })
 
@@ -67,10 +68,10 @@ class FlowInitialiser(random: Random) extends LazyLogging {
     else continueRiverFlow(edges.toSet -- nextRivers.keySet, rivers ++ nextRivers)
   }
 
-  private[river] final def findSources(edges: RemainingEdges): Set[Point] = {
+  private[river] final def findSources(edges: RemainingEdges): Set[Point] =
     edges.flatMap(_.points)
       .groupBy(identity)
       .filter(_._2.size > 2)
       .keySet
-  }
+
 }

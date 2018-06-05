@@ -22,8 +22,8 @@ final case class HexPosition(x: Int, y: Int) extends Ordered[HexPosition] {
     )
     else Map(
       N -> HexPosition(x - 1, y),
-      NE -> HexPosition(x - 1, y + 1),
       NW -> HexPosition(x - 1, y - 1),
+      NE -> HexPosition(x - 1, y + 1),
       SW -> HexPosition(x, y - 1),
       SE -> HexPosition(x, y + 1),
       S -> HexPosition(x + 1, y)

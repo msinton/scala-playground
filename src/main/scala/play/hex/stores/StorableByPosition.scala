@@ -13,7 +13,7 @@ trait StorableByPosition[P, T] {
 
   def all: Iterable[T] = byPosition.values
 
-  // override to for custom logic in update
+  // override for custom logic in update and remove
   protected def updateCustom(p: P, newT: T, oldT: T): Unit = {}
   protected def updateCustom(p: P, newT: T): Unit = {}
   protected def removeCustom(p: P, t: T): Unit = {}
