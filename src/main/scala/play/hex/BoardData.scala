@@ -1,15 +1,11 @@
 package play.hex
 
+import play.edge.{Boat, Bridge, Wall}
 import play.hex.graph.HexPosition
 import play.hex.stores._
 import play.river.{RiverNetwork, RiverSegment}
 
 import scala.util.Random
-
-// TODO replace wall with this
-sealed trait Wall
-case object WoodWall extends Wall
-case object StoneWall extends Wall
 
 case class Person()
 
@@ -32,9 +28,9 @@ class BoardData(numPlayers: Int) {
     new StoreByEdge[RiverSegment](rs)
   }
 
-  // rivers
-  // bridges
-  // boats
+  val bridges: StorableByEdge[Bridge] = new StoreByEdge[Bridge](Map())
+
+  val boats: StorableByEdge[Boat] = new StoreByEdge[Boat](Map())
 
   def floodHex(hexPos: HexPosition): Unit = {
     hexes.byPosition.get(hexPos).foreach(hex => hexes.update(hexPos, hex.flood))
